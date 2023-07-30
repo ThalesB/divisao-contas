@@ -1,0 +1,125 @@
+<form class="formulario" (ngSubmit)="calcular()">
+<section class="container">
+
+    
+      <h2 class="formulario__titulo">Conta Geral</h2>
+  
+      <div class="form-field">
+        <label class="form-field__label" for="valorTotal" >Valor Total</label>
+        <input class="form-field__input" type="number" id="valorTotal" [(ngModel)]="valorTotal" name="valorTotal"/>
+      </div>
+  
+      <div class="form-field">
+        <label class="form-field__label" for="valorTaxaExtra">Taxa Extra</label>
+        <input class="form-field__input" type="number" id="valorTaxaExtra" [(ngModel)]="valorTaxaExtra" name="valorTaxaExtra"/>
+      </div>
+
+      <div class="form-field">
+        <label class="form-field__label" for="valorEntrega">Valor Entrega</label>
+        <input class="form-field__input" type="number" id="valorEntrega" [(ngModel)]="valorEntrega" name="valorEntrega"/>
+      </div>
+
+      <div class="form-field">
+        <label class="form-field__label" for="taxaAtendimento">Taxa Atendimento</label>
+      </div>
+
+      <div>
+        <mat-slide-toggle (click)="ativarDesativar(this.isChecked)">Ativar/Desativar</mat-slide-toggle>
+      </div>
+
+      <div class="form-field">
+        <label class="form-field__label" for="descontos">Descontos</label>
+        <input class="form-field__input" type="number" id="descontos" [(ngModel)]="descontos" name="descontos"/>
+
+      </div>
+
+      <br>
+      <div class=".button-wrapper" >
+        <button class="botao" type="button" (click)="adicionarContaGeral()">Adicionar</button>
+      </div>
+  </section>
+
+  <section class="container">
+    <h2 class="titulo">Conta Geral Adicionada</h2>
+  <table class="tabela">
+    <thead class="tabela__cabecalho" >
+      <th class="tabela__cabecalho_conteudo">Valor Total</th>
+      <th class="tabela__cabecalho_conteudo">Taxa de Entrega</th>
+      <th class="tabela__cabecalho_conteudo">Taxa Extra</th>
+      <th class="tabela__cabecalho_conteudo">Taxa de Atendimento</th>
+      <th class="tabela__cabecalho_conteudo">Desconto</th>
+    </thead>
+      <tbody>
+        <tr class="tabela__linha">
+          <td class="tabela__conteudo">{{this.contaGeral.valorTotal === null || this.contaGeral.valorTotal === undefined ? 0 : this.contaGeral.valorTotal}}</td>
+          <td class="tabela__conteudo">{{this.contaGeral.valorEntrega}}</td>
+          <td class="tabela__conteudo">{{this.contaGeral.valorTaxaExtra}}</td>
+          <td class="tabela__conteudo">{{this.contaGeral.taxaAtendimento}}</td>
+          <td class="tabela__conteudo">{{this.contaGeral.descontos}}</td>
+
+        </tr>
+     </tbody>
+    </table>
+    </section>
+
+    <section class="container">
+        <h2 class="formulario__titulo">Conta Individual</h2>
+    
+        <div class="form-field">
+          <label class="form-field__label" for="nomeConta" > Nome Pagante</label>
+          <input class="form-field__input" type="text" id="nomeConta" [(ngModel)]="nomeConta" name="nomeConta"/>
+        </div>
+    
+        <div class="form-field">
+          <label class="form-field__label" for="numeroConta">Conta Nº </label>
+          <input class="form-field__input" type="number" id="numeroConta" [(ngModel)]="numeroConta" name="numeroConta"/>
+        </div>
+  
+        <div class="form-field">
+          <label class="form-field__label" for="valorItem">Valor Item</label>
+          <input class="form-field__input" type="number" id="valorItem" [(ngModel)]="valorItem" name="valorItem"/>
+        </div>
+  
+        <div class="form-field">
+          <label class="form-field__label" for="nomeItem">Nome Item</label>
+          <input class="form-field__input" type="text" id="nomeItem" [(ngModel)]="nomeItem" name="valorItem"/>
+        </div>
+  
+        <br>
+        <div class=".button-wrapper" >
+          <button class="botao" type="button" (click)=" adicionarItem()">Adicionar Item</button>
+        </div>
+
+        <section class="container">
+          <h2 class="titulo">Items</h2>
+        <table class="tabela">
+          <thead class="tabela__cabecalho">
+            <th class="tabela__cabecalho_conteudo">Nome Pagante</th>
+            <th class="tabela__cabecalho_conteudo">Valor Item</th>
+            <th class="tabela__cabecalho_conteudo">Nome Item</th>
+            <th class="tabela__cabecalho_conteudo">Nº Conta</th>
+          </thead>
+            <tbody *ngIf="items?.length > 0; else listaVazia">
+              <tr class="tabela__linha"*ngFor="let item of items">
+                <td class="tabela__conteudo">{{item.nomeConta}}</td>
+                <td class="tabela__conteudo">{{item.valorItem}}</td>
+                <td class="tabela__conteudo">{{item.nomeItem}}</td>
+                <td class="tabela__conteudo">{{item.numeroConta}}</td>
+              </tr>
+           </tbody>
+          </table>
+          <ng-template #listaVazia>
+             <p>Nenhuma Operação Feita</p>
+          </ng-template>
+          </section>
+       
+    </section>
+
+
+    <div class=".button-wrapper" >
+      <button class="botao" type="button" (click)="calcular()">Calcular</button>
+    </div>
+    <div class=".button-wrapper" >
+      <button class="botao" type="button" (click)="limparConta()">Limpar</button>
+    </div>
+  </form>
