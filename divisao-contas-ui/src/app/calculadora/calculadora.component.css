@@ -95,4 +95,36 @@
       padding: 10px;
       border-bottom: 1px solid var(--cinza-claro);
     }
+
+     /* Estilo para ajustar a largura do select */
+.mat-select {
+  width: 200px;
+}
+
+/* Estilo para remover a borda padrão do select */
+.mat-select {
+  border: none;
+  box-shadow: none;
+}
+
+/* Estilo para adicionar uma borda personalizada ao select quando estiver focado */
+.mat-select.mat-focused .mat-select-value {
+  border: 1px solid #1976d2; /* Escolha a cor desejada */
+}
+
+/* Estilo para adicionar borda ao redor das opções do select quando estiver aberto */
+.mat-select-panel {
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilo para mudar a cor do texto do select */
+.mat-select-value {
+  color: #333; /* Escolha a cor desejada */
+}
+
+/* Estilo para alterar a cor do ícone de seta do select */
+.mat-select-arrow {
+  color: #333; /* Escolha a cor desejada */
+}
   }
+ 

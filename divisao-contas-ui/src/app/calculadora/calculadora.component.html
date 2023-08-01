@@ -3,20 +3,42 @@
 
     
       <h2 class="formulario__titulo">Conta Geral</h2>
+
+      <h3 class="formulario__titulo">Dados de Pagamento</h3>
+      
+      <div class="form-field">
+        <label class="form-field__label" for="pix">Chave Pix</label>
+        <input class="form-field__input" type="text" id="pix" [(ngModel)]="pix" name="pix"/>
+      </div>
+
+      <div class="form-field">
+        <label class="form-field__label" for="credencial">Token Credencial da sua Plataforma</label>
+        <input class="form-field__input" type="password" id="credencial" [(ngModel)]="credencial" name="credencial"/>
+      </div>
+
+      <div class="form-field">
+        <label class="form-field__label" for="valorSelecionado" >Plataforma de Pagamento</label>
+      </div>
+
+      <div>
+        <select [(ngModel)]="valorSelecionado" name="valorSelecionado">
+          <option *ngFor="let opcao of obterOpcoesEnum()" [value]="opcao">{{ opcao }}</option>
+        </select>        
+      </div>
   
       <div class="form-field">
         <label class="form-field__label" for="valorTotal" >Valor Total</label>
-        <input class="form-field__input" type="number" id="valorTotal" [(ngModel)]="valorTotal" name="valorTotal"/>
+        <input class="form-field__input" type="number" id="valorTotal" [(ngModel)]="valorTotal" [ngModelOptions]="{ standalone: true }"/>
       </div>
   
       <div class="form-field">
         <label class="form-field__label" for="valorTaxaExtra">Taxa Extra</label>
-        <input class="form-field__input" type="number" id="valorTaxaExtra" [(ngModel)]="valorTaxaExtra" name="valorTaxaExtra"/>
+        <input class="form-field__input" type="number" id="valorTaxaExtra" [(ngModel)]="valorTaxaExtra" [ngModelOptions]="{ standalone: true }"/>
       </div>
 
       <div class="form-field">
         <label class="form-field__label" for="valorEntrega">Valor Entrega</label>
-        <input class="form-field__input" type="number" id="valorEntrega" [(ngModel)]="valorEntrega" name="valorEntrega"/>
+        <input class="form-field__input" type="number" id="valorEntrega" [(ngModel)]="valorEntrega" [ngModelOptions]="{ standalone: true }"/>
       </div>
 
       <div class="form-field">
@@ -30,8 +52,9 @@
       <div class="form-field">
         <label class="form-field__label" for="descontos">Descontos</label>
         <input class="form-field__input" type="number" id="descontos" [(ngModel)]="descontos" name="descontos"/>
-
       </div>
+
+     
 
       <br>
       <div class=".button-wrapper" >
@@ -51,11 +74,11 @@
     </thead>
       <tbody>
         <tr class="tabela__linha">
-          <td class="tabela__conteudo">{{this.contaGeral.valorTotal === null || this.contaGeral.valorTotal === undefined ? 0 : this.contaGeral.valorTotal}}</td>
-          <td class="tabela__conteudo">{{this.contaGeral.valorEntrega}}</td>
-          <td class="tabela__conteudo">{{this.contaGeral.valorTaxaExtra}}</td>
-          <td class="tabela__conteudo">{{this.contaGeral.taxaAtendimento}}</td>
-          <td class="tabela__conteudo">{{this.contaGeral.descontos}}</td>
+          <td class="tabela__conteudo">{{this.contaGeral?.valorTotal}}</td>
+          <td class="tabela__conteudo">{{this.contaGeral?.valorEntrega}}</td>
+          <td class="tabela__conteudo">{{this.contaGeral?.valorTaxaExtra}}</td>
+          <td class="tabela__conteudo">{{this.contaGeral?.taxaAtendimento}}</td>
+          <td class="tabela__conteudo">{{this.contaGeral?.descontos}}</td>
 
         </tr>
      </tbody>
@@ -122,4 +145,5 @@
     <div class=".button-wrapper" >
       <button class="botao" type="button" (click)="limparConta()">Limpar</button>
     </div>
+
   </form>

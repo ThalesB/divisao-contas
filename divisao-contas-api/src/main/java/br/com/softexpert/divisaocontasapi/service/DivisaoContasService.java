@@ -22,19 +22,7 @@ public class DivisaoContasService {
 
         if (!contas.getItems().isEmpty()) {
 
-            //Separando os items por número da conta
-            Map<Integer, ItemDTO> somaPorNumeroConta = contas.getItems().stream()
-                    .collect(Collectors.groupingBy(ItemDTO::getNumeroConta,
-                            Collectors.reducing(BigDecimal.ZERO, ItemDTO::getValorItem, BigDecimal::add)))
-                    .entrySet().stream()
-                    .collect(Collectors.toMap(Map.Entry::getKey,
-                            entry -> new ItemDTO(entry.getKey(), contas.getItems().stream()
-                                    .filter(item -> item.getNumeroConta().equals(entry.getKey()))
-                                    .findFirst()
-                                    .orElseThrow()
-                                    .getNomeConta(), entry.getValue())));
-
-            List<ItemDTO> itemsTotais = new ArrayList<>(somaPorNumeroConta.values());
+            List<ItemDTO> itemsTotais = getItemsPorNumero(contas);
 
             itemsTotais.forEach(item -> {
 
@@ -47,10 +35,28 @@ public class DivisaoContasService {
                                .nomeConta(item.getNomeConta())
                                .numeroConta(item.getNumeroConta())
                                .valorFinal(valorFinal)
-                               .linkPix(linkPix)
+                                .qrCodeOuChavePix(linkPix)
                                 .build());
             });
         }
+    }
+
+    private List<ItemDTO> getItemsPorNumero(DivisaoContaDTO contas) {
+
+        //Separando os items por número da conta
+        Map<Integer, ItemDTO> somaPorNumeroConta = contas.getItems().stream()
+                .collect(Collectors.groupingBy(ItemDTO::getNumeroConta,
+                        Collectors.reducing(BigDecimal.ZERO, ItemDTO::getValorItem, BigDecimal::add)))
+                .entrySet().stream()
+                .collect(Collectors.toMap(Map.Entry::getKey,
+                        entry -> new ItemDTO(entry.getKey(), contas.getItems().stream()
+                                .filter(item -> item.getNumeroConta().equals(entry.getKey()))
+                                .findFirst()
+                                .orElseThrow()
+                                .getNomeConta(), entry.getValue())));
+
+        List<ItemDTO> itemsTotais = new ArrayList<>(somaPorNumeroConta.values());
+        return itemsTotais;
     }
 
     private BigDecimal getValorFinal(DivisaoContaDTO contas, Integer tamanhoLista, ItemDTO item) {

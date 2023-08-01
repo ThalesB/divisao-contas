@@ -1,3 +1,5 @@
+import { GatewayPagamentoEnum } from "./geteway-pagamento.enum";
+
 export interface ContaGeral{
     valorTotal: number;
     valorTaxaExtra: number;
@@ -5,4 +7,6 @@ export interface ContaGeral{
     valorEntrega: number;
     descontos: number;
     pix: string;
+    credencial: string;
+    gatewayPagamento: GatewayPagamentoEnum;
 }

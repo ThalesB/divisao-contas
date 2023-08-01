@@ -3,6 +3,8 @@ import { FormsModule } from '@angular/forms';
 import { ContaGeral } from '../model/conta-geral.model';
 import { Item } from '../model/item.model';
 import { Conta } from '../model/conta.model';
+import { GatewayPagamentoEnum } from '../model/geteway-pagamento.enum';
+import { Gateway } from '../model/gateway.model';
 
 @Component({
   selector: 'app-calculadora',
@@ -12,12 +14,19 @@ import { Conta } from '../model/conta.model';
 export class CalculadoraComponent implements OnInit {
 
 
-  valorTotal: number = 0 ;
+  valorTotal: number = 0;
   valorTaxaExtra: number = 0 ;
   isChecked: boolean = false;
   valorEntrega: number = 0 ;
   descontos: number = 0 ;
-  contaGeral: ContaGeral = null;
+  pix: string;
+  credencial: string;
+  contaGeral: ContaGeral;
+  valorSelecionado: GatewayPagamentoEnum;
+
+  obterOpcoesEnum(): GatewayPagamentoEnum[] {
+    return Object.values(GatewayPagamentoEnum);
+  }
 
   nomeConta: string = '' ;
   numeroConta:number= 0 ;
@@ -27,10 +36,11 @@ export class CalculadoraComponent implements OnInit {
   items: Item[] = [];
 
   constructor() {
-    this.contaGeral = null;
   }
 
   ngOnInit(): void {
+    this.valorTotal = 0;
+
   }
 
   public adicionarContaGeral(): void {
@@ -39,7 +49,10 @@ export class CalculadoraComponent implements OnInit {
         valorEntrega: this.valorEntrega,
         valorTaxaExtra: this.valorTaxaExtra,
         valorTotal: this.valorTotal,
-        descontos: this.descontos
+        descontos: this.descontos,
+        pix: this.pix,
+        credencial: this.credencial,
+        gatewayPagamento: this.valorSelecionado
     }
 
     this.contaGeral = conta;

@@ -12,5 +12,5 @@ public class ContaFinalDTO {
     private String nomeConta;
     private BigDecimal valorFinal;
     private Integer numeroConta;
-    private String linkPix;
+    private String qrCodeOuChavePix;
 }

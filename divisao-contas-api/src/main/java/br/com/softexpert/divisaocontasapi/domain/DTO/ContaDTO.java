@@ -13,4 +13,6 @@ public class ContaDTO {
     private BigDecimal valorEntrega;
     private BigDecimal descontos;
     private String pix;
+    private String credential;
+    private String gatewayPagamento;
 }
