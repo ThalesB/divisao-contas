@@ -5,6 +5,8 @@ import { Item } from '../model/item.model';
 import { Conta } from '../model/conta.model';
 import { GatewayPagamentoEnum } from '../model/geteway-pagamento.enum';
 import { Gateway } from '../model/gateway.model';
+import { ContaFinal } from '../model/conta-final.model';
+import { DivisaoContasService } from '../divisao-contas.service';
 
 @Component({
   selector: 'app-calculadora',
@@ -32,10 +34,15 @@ export class CalculadoraComponent implements OnInit {
   numeroConta:number= 0 ;
   valorItem: number = 0 ;
   nomeItem: string = '' ;
+  email: string = '';
+  ultimoNome: string = '';
+
 
   items: Item[] = [];
 
-  constructor() {
+  contasFinais: ContaFinal[] = [];
+
+  constructor(private service: DivisaoContasService) {
   }
 
   ngOnInit(): void {
@@ -65,7 +72,9 @@ export class CalculadoraComponent implements OnInit {
        nomeConta: this.nomeConta,
        numeroConta: this.numeroConta,
        valorItem: this.valorItem,
-       nomeItem: this.nomeItem
+       nomeItem: this.nomeItem,
+       email: this.email,
+       ultimoNome: this.ultimoNome
    }
 
    this.items.push(item);
@@ -85,13 +94,19 @@ export class CalculadoraComponent implements OnInit {
     location.reload();
   }
 
-  calcular() {
+  public calcular(): void {
+
     const calculoConta: Conta = {
         items: this.items,
         conta: this.contaGeral
     }
 
-    console.log(calculoConta);
+    this.service.calcular(calculoConta).subscribe((response) => {
+      this.contasFinais = response;
+      console.log('subscribe: ' + response);
+    });
+
+    console.log('contasFinais: ' + this.contasFinais);
   }
 
 }

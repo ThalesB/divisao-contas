@@ -3,4 +3,6 @@ export interface Item {
     numeroConta: number;
     valorItem: number;
     nomeItem: string;
+    email: string;
+    ultimoNome: string;
 }

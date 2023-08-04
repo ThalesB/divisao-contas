@@ -89,8 +89,18 @@
         <h2 class="formulario__titulo">Conta Individual</h2>
     
         <div class="form-field">
-          <label class="form-field__label" for="nomeConta" > Nome Pagante</label>
+          <label class="form-field__label" for="nomeConta" >Nome</label>
           <input class="form-field__input" type="text" id="nomeConta" [(ngModel)]="nomeConta" name="nomeConta"/>
+        </div>
+
+        <div class="form-field">
+          <label class="form-field__label" for="ultimoNome">Sobrenome</label>
+          <input class="form-field__input" type="text" id="ultimoNome" [(ngModel)]="ultimoNome" name="ultimoNome"/>
+        </div>
+
+        <div class="form-field">
+          <label class="form-field__label" for="email">E-mail</label>
+          <input class="form-field__input" type="text" id="email" [(ngModel)]="email" name="email"/>
         </div>
     
         <div class="form-field">
@@ -145,5 +155,31 @@
     <div class=".button-wrapper" >
       <button class="botao" type="button" (click)="limparConta()">Limpar</button>
     </div>
-
+      <section class="container">
+        <h2 class="titulo">Divisão de Contas</h2>
+        <table class="tabela">
+          <thead class="tabela__cabecalho">
+            <th class="tabela__cabecalho_conteudo">Nome Conta</th>
+            <th class="tabela__cabecalho_conteudo">Valor</th>
+            <th class="tabela__cabecalho_conteudo">Nº Conta </th>
+            <th class="tabela__cabecalho_conteudo">QR CODE PIX</th>
+            <th class="tabela__cabecalho_conteudo">Chave Pix</th>
+          </thead>
+          <tbody *ngIf="contasFinais?.length > 0; else listaVazia">
+            <tr class="tabela__linha" *ngFor="let contas of contasFinais">
+              <td class="tabela__conteudo">{{contas.nomeConta}}</td>
+              <td class="tabela__conteudo">{{contas.valorFinal}}</td>
+              <td class="tabela__conteudo">{{contas.numeroConta}}</td>
+              <td class="tabela__conteudo" *ngIf="contas.qrCodePix">
+                <img [src]="contas.qrCodePix" alt="Código QR" style="width: 200px; height: 200x;">
+              </td>
+              <td class="tabela__conteudo" *ngIf="!contas.qrCodePix">Sem QR CODE</td>
+              <td class="tabela__conteudo">{{contas.chavePix}}</td>
+            </tr>
+          </tbody>
+        </table>
+        <ng-template #listaVazia>
+          <p>Nenhuma Operação Feita</p>
+        </ng-template>
+      </section>      
   </form>

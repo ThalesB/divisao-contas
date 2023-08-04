@@ -7,7 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSelectModule } from '@angular/material/select';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // Importe o BrowserAnimationsModule
-
+import { HttpClientModule } from '@angular/common/http';
 
 
 
@@ -22,6 +22,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
     MatSlideToggleModule,
     MatSelectModule,
     BrowserAnimationsModule,
+    HttpClientModule,
     FormsModule
   ],
   providers: [],
