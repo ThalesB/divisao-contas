@@ -88,7 +88,6 @@ public class DivisaoContasService {
                             .map(ItemDTO::getValorItem)
                             .reduce(BigDecimal.ZERO, BigDecimal::add);
 
-                    // Escolha um nome e um email, ou outro critério que faça sentido
                     String nomeConta = itemsMesmaConta.get(0).getNomeConta();
                     String nomeItem = itemsMesmaConta.get(0).getNomeItem();
                     String email = itemsMesmaConta.get(0).getEmail();
