@@ -74,7 +74,7 @@ public class DivisaoContasService {
         return contasFinais;
     }
 
-    private List<ItemDTO> getItemsPorNumero(DivisaoContaDTO contas) {
+    public List<ItemDTO> getItemsPorNumero(DivisaoContaDTO contas) {
 
         Map<Integer, List<ItemDTO>> itemsPorNumeroConta = contas.getItems().stream()
                 .collect(Collectors.groupingBy(ItemDTO::getNumeroConta));
@@ -98,19 +98,26 @@ public class DivisaoContasService {
                 .collect(Collectors.toList());
     }
 
-    private BigDecimal getValorFinal(DivisaoContaDTO contas, Integer tamanhoLista, ItemDTO item) {
+    public BigDecimal getValorFinal(DivisaoContaDTO contas, Integer tamanhoLista, ItemDTO item) {
 
         BigDecimal valorDesconto = this.calculoDivisaoTaxas(contas.getConta().getDescontos(), tamanhoLista);
         BigDecimal valorTaxa = this.calculoDivisaoTaxas(contas.getConta().getValorTaxaExtra(), tamanhoLista);
         BigDecimal valorEntrega = this.calculoDivisaoTaxas(contas.getConta().getValorEntrega(), tamanhoLista);
 
         BigDecimal valorFinal = item.getValorItem().add(valorEntrega).add(valorTaxa).subtract(valorDesconto);
-        BigDecimal valorComTaxaDeAtendimento = valorFinal.multiply(new BigDecimal("0.1")).add(valorFinal);
+
+        // Calcula o valor original (antes dos 10%)
+        BigDecimal dezPorcento = contas.getConta().getValorTotal().divide(new BigDecimal("1.10")).setScale(2, BigDecimal.ROUND_HALF_UP);
+
+        // Calcula o valor dos 10% retirados do valor total
+        BigDecimal valorDosDezPorcento = contas.getConta().getValorTotal().subtract(dezPorcento);
+
+        BigDecimal valorComTaxaDeAtendimento = this.calculoDivisaoTaxas(valorDosDezPorcento, tamanhoLista).add(valorFinal);
 
         return contas.getConta().getTaxaAtendimento() ? valorComTaxaDeAtendimento.setScale(2, RoundingMode.HALF_UP) : valorFinal.setScale(2, RoundingMode.HALF_UP);
     }
 
-    private BigDecimal calculoDivisaoTaxas(BigDecimal taxa, Integer tamanhoLista){
+    public BigDecimal calculoDivisaoTaxas(BigDecimal taxa, Integer tamanhoLista){
 
         return Objects.nonNull(taxa) ? taxa.divide(BigDecimal.valueOf(tamanhoLista)) : BigDecimal.ZERO;
     }

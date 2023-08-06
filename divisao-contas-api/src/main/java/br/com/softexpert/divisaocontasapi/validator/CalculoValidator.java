@@ -6,7 +6,6 @@ import br.com.softexpert.divisaocontasapi.validator.exception.BusinessException;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.math.RoundingMode;
 import java.util.List;
 

@@ -1,5 +1,5 @@
 import br.com.softexpert.divisaocontasapi.controller.client.MercadoPagoClient;
-import br.com.softexpert.divisaocontasapi.domain.DTO.ContaFinalDTO;
+import br.com.softexpert.divisaocontasapi.domain.DTO.ItemDTO;
 import br.com.softexpert.divisaocontasapi.feature.ScenarioFactory;
 import br.com.softexpert.divisaocontasapi.service.DivisaoContasService;
 import br.com.softexpert.divisaocontasapi.service.MercadoPagoPaymentProcessor;
@@ -12,12 +12,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class DivisaoContasServiceTest {
@@ -41,15 +39,29 @@ public class DivisaoContasServiceTest {
     private DivisaoContasService service;
 
     @Test
-    public void dividirContas_ExpectedSucess() throws Exception {
-        // Configurar o comportamento esperado do paymentProcessorFactory
+    public void getItemsPorNumero_ExpectedSucess(){
 
-        when(paymentProcessorFactory.createPaymentProcessor("MercadoPagoPaymentProcessor"))
-                .thenReturn(mercadoPagoPaymentProcessor);
+        List<ItemDTO> itemsPorNumero = this.service.getItemsPorNumero(ScenarioFactory.NEW_CONTAGERAL_DTO);
 
-        // Restante do código do teste
-        List<ContaFinalDTO> contasFinais = this.service.dividirContas(ScenarioFactory.NEW_CONTAGERAL_DTO);
+        assertThat(itemsPorNumero).isNotEmpty();
+        assertThat(itemsPorNumero.size()).isEqualTo(1);
+    }
 
-        assertThat(contasFinais).isNotEmpty();
+    @Test
+    public void getValorFinal_ExpectedSucess() {
+
+        BigDecimal valorFinal = this.service.getValorFinal(ScenarioFactory.NEW_CONTAGERAL_DTO, 1, ScenarioFactory.NEW_ITEM_DTO);
+
+        assertThat(valorFinal).isNotZero();
+        assertThat(valorFinal).isNotNull();
+    }
+
+    @Test
+    public void calculoDivisaoTaxa_ExpectedSucess(){
+
+        BigDecimal valorTaxa = this.service.calculoDivisaoTaxas(BigDecimal.TEN, 1);
+
+        assertThat(valorTaxa).isNotNull();
+        assertThat(valorTaxa).isEqualTo(BigDecimal.TEN);
     }
 }

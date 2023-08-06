@@ -16,6 +16,7 @@
 		<java.version>11</java.version>
 		<spring-cloud.version>Greenwich.SR2</spring-cloud.version>
 		<junit-plataform.version>5.3.2</junit-plataform.version>
+		<cucumber.version>4.7.2</cucumber.version>
 	</properties>
 	<dependencies>
 		<!-- Dependência do Lombok -->
@@ -85,6 +86,36 @@
 			<artifactId>assertj-core</artifactId>
 			<version>3.13.2</version>
 			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>io.cucumber</groupId>
+			<artifactId>cucumber-core</artifactId>
+			<version>${cucumber.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>io.cucumber</groupId>
+			<artifactId>cucumber-java</artifactId>
+			<version>${cucumber.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.cucumber</groupId>
+			<artifactId>cucumber-junit</artifactId>
+			<version>${cucumber.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.cucumber</groupId>
+			<artifactId>cucumber-spring</artifactId>
+			<version>${cucumber.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-tx</artifactId>
+			<version>5.1.9.RELEASE</version> <!-- Use a versão compatível com a do Spring Framework que você está usando -->
 		</dependency>
 
 	</dependencies>
