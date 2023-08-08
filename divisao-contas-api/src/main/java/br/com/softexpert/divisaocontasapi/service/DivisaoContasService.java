@@ -41,6 +41,8 @@ public class DivisaoContasService {
 
                 BigDecimal valorFinal = getValorFinal(contas, itemsTotais.size(), item);
 
+                item.setValorItem(valorFinal);
+
                 try {
                     if (Objects.nonNull(contas.getConta().getCredencial())) {
                         PaymentResponse response = this.processPayment(contas.getConta(), item, GatewayEnum.getImplementationByDescription(contas.getConta().getGatewayPagamento()));
